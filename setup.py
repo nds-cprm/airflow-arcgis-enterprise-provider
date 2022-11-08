@@ -1,6 +1,6 @@
 import io
 from os.path import dirname, join
-from setuptools import find_packages, setup
+from setuptools import setup
 
 
 def read(*names, **kwargs):
@@ -20,7 +20,10 @@ setup(
     author_email="carlos.mota@sgb.gov.br",
     url="https://github.com/nds-cprm/airflow-arcgis-enterprise-provider",
     license="GPL",
-    packages=find_packages(),
+    packages=[
+        'airflow.providers.arcgis',
+        'airflow.providers.arcgis.hooks'
+    ],
     include_package_data=True,
     install_requires=[
         "apache-airflow>=2.4.0",

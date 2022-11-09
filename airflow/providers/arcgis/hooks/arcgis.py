@@ -1,9 +1,9 @@
-from arcgis.gis import GIS
-from bs4 import BeautifulSoup
-from urllib.parse import urlparse
-from typing import Any, Callable, cast
 # from airflow.exceptions import AirflowException
 from airflow.hooks.base import BaseHook
+from arcgis.gis import GIS
+from bs4 import BeautifulSoup
+from typing import Any, cast
+from urllib.parse import urlparse
 
 
 class ArcGISHook(BaseHook):
@@ -70,7 +70,6 @@ class ArcGISHook(BaseHook):
         
         return GIS(username=conn.login, password=conn.get_password(), **kwargs)
 
-
     def run(self):
         gis = self.get_conn()
         return gis
@@ -82,6 +81,7 @@ class ArcGISHook(BaseHook):
             return True, f"Connected to ArcGIS Portal/Enterprise: {self.portal_url}"
 
         except Exception as e:
-            soup = BeautifulSoup(str(e), 'html.parser')
+            error_class = e.__class__.__name__
+            message = BeautifulSoup(str(e), 'html.parser').get_text()
 
-            return False, f"Failed to check URL {self.portal_url}: [{e.__class__.__name__}]: {soup.get_text()}"
+            return False, f"Failed to check URL {self.portal_url}: [{error_class}]: {message}"

@@ -9,7 +9,7 @@ versions:
 
 dependencies:
   - apache-airflow>=2.4.0
-  - arcgis==2.0.*
+  - arcgis==2.2.*
   - beautifulsoup4==4.*
 
 integrations:

@@ -25,9 +25,5 @@ setup(
         'airflow.providers.arcgis.hooks'
     ],
     include_package_data=True,
-    install_requires=[
-        "apache-airflow>=2.4.0",
-        "arcgis==2.0.*",
-        "beautifulsoup4==4.*"
-    ],
+    install_requires=read("requirements.txt").splitlines(),
 )

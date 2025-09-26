@@ -9,6 +9,8 @@ def read(*names, **kwargs):
         encoding=kwargs.get("encoding", "utf-8")
     ).read()
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 
 setup(
     name="apache-airflow-providers-arcgis",
@@ -21,9 +23,14 @@ setup(
     url="https://github.com/nds-cprm/airflow-arcgis-enterprise-provider",
     license="GPL",
     packages=[
-        'airflow.providers.arcgis',
-        'airflow.providers.arcgis.hooks'
+        'airflow.providers.arcgis_enterprise',
+        'airflow.providers.arcgis_enterprise.hooks'
     ],
     include_package_data=True,
-    install_requires=read("requirements.txt").splitlines(),
+    install_requires=required,
+    entry_points={
+        'apache_airflow_provider': [
+            "provider_info=airflow.providers.arcgis_enterprise.__init__:get_provider_info"
+        ],
+    },
 )
